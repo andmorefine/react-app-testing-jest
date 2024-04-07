@@ -33,7 +33,7 @@ const App = () => {
   }, [])
 
   return (
-    <div style={{ margin: '0 40px' }}>
+    <div>
       <h1>Users:</h1>
       <ul>
         {users.map(({ id, name, username }) => (

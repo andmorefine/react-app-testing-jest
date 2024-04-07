@@ -1,25 +1,29 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import renderer, { act } from 'react-test-renderer'
 import App from './App'
 
-// test('renders learn react link', () => {
-//   render(<App />)
-//   const linkElement = screen.getByText(/learn react/i)
-//   expect(linkElement).toBeInTheDocument()
-// })
+// ユニットテストで使用するダミーのユーザーデータ
+const fakeUserData = [{ id: 1, name: 'Yamada Hanako', username: 'Yamada' }]
 
-// describe('my function or component', () => {
-//   test('does the following', () => {
-//     // add your testing output
-//   })
-// })
+beforeEach(() => {
+  global.fetch = jest.fn(() =>
+    Promise.resolve(
+      new Response(JSON.stringify(fakeUserData), {
+        status: 200,
+        headers: { 'Content-type': 'application/json' },
+      }),
+    ),
+  )
+})
 
-describe('true is truthy and false is falsy', () => {
-  test('true is truthy', () => {
-    expect(true).toBe(true)
+afterEach(() => {
+  jest.restoreAllMocks()
+})
+
+test('check if it renders a correct snapshot', async () => {
+  let tree = renderer.create(<App />)
+  await act(async () => {
+    tree.update(<App />)
   })
-
-  test('false is falsy', () => {
-    expect(false).toBe(false)
-  })
+  expect(tree.toJSON()).toMatchSnapshot()
 })

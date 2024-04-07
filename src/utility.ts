@@ -1,3 +1,3 @@
 export function getFormattedUserName(username: string) {
-  return "@" + username;
+  return !username.startsWith('@') ? `@${username}` : username
 }

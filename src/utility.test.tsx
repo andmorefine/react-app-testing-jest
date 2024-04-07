@@ -1,7 +1,7 @@
 import { getFormattedUserName } from './utility'
 
 describe('utility', () => {
-  test('getFormattedUserName はユーザー名の先頭に @ を追加します', () => {
-    expect(getFormattedUserName('hanako')).toBe('@hanako')
+  test('getFormattedUserName は、すでに提供されている @ で始まる場合は @ を追加しません', () => {
+    expect(getFormattedUserName('@hanako')).toBe('@hanako')
   })
 })
