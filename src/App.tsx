@@ -9,9 +9,45 @@ interface User {
   username: string
 }
 
+interface Repo {
+  id: number
+  name: string
+}
+
 const App = () => {
   const [users, setUsers] = useState<User[]>([])
   const isMounted = useRef(true) // isMountedをuseRefで管理
+
+  const [username, setUsername] = useState<string>('')
+  const [repos, setRepos] = useState<Repo[]>([])
+  const [error, setError] = useState<string>('')
+
+  const fetchRepos = async (username: string) => {
+    setRepos([])
+    setError('')
+    try {
+      const response = await fetch(
+        `https://api.github.com/users/${username}/repos`,
+      )
+      if (!response.ok) {
+        throw new Error('User not found')
+      }
+      const data: Repo[] = await response.json()
+      setRepos(data)
+    } catch (error: any) {
+      setError(error.message)
+    }
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value)
+  }
+
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      fetchRepos(username)
+    }
+  }
 
   // Fetch the data from the server
   useEffect(() => {
@@ -38,8 +74,24 @@ const App = () => {
       <ul>
         {users.map(({ id, name, username }) => (
           <li key={id}>
-            {name} -- <span>({getFormattedUserName(username)})</span>
+            {name} -- ({getFormattedUserName(username || '')})
           </li>
+        ))}
+      </ul>
+
+      <input
+        type="text"
+        placeholder="GitHub username"
+        value={username}
+        onChange={handleInputChange}
+        onKeyDown={handleInputKeyDown}
+      />
+
+      {error && <p>{error}</p>}
+
+      <ul>
+        {repos.map((repo) => (
+          <li key={repo.id}>{repo.name}</li>
         ))}
       </ul>
     </div>

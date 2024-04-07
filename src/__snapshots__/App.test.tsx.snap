@@ -8,13 +8,18 @@ exports[`check if it renders a correct snapshot 1`] = `
   <ul>
     <li>
       Yamada Hanako
-       -- 
-      <span>
-        (
-        @Yamada
-        )
-      </span>
+       -- (
+      @Yamada
+      )
     </li>
   </ul>
+  <input
+    onChange={[Function]}
+    onKeyDown={[Function]}
+    placeholder="GitHub username"
+    type="text"
+    value=""
+  />
+  <ul />
 </div>
 `;
