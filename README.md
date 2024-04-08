@@ -1,6 +1,6 @@
 # What to Test in a React Application
 
-関連記事：[Reactアプリで何をテストするのか](https://qiita.com/andmorefine/items/75415e6f4f842af15fd6)
+関連記事：[Reactアプリで何をテストするのか](https://qiita.com/andmorefine/items/9f146701f1f72cab8e0d)
 
 ## インストール
 
